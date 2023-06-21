@@ -3,3 +3,6 @@
 ################################################################################
 
 /.vs
+/MyBookShop/.vs/MyBookShop
+/MyBookShop/MyBookShop/obj
+/MyBookShop/MyBookShop/bin/Debug/net5.0
