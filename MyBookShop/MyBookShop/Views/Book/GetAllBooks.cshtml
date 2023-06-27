@@ -1,0 +1,37 @@
+﻿@model IEnumerable<MyBookShop.Models.BookModel>
+
+@{
+    ViewData["Title"] = "All Books";
+}
+
+<link href="~/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+<h1>All Books</h1>
+@foreach (var item in Model)
+{
+    <div class="container">
+        <div class="row">
+
+
+            <div class="col-4">
+                <div class="card" style="width: 300px;">
+                    <img src="/Images/book.png" class="card-img-top" alt="Sample Image">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">@item.BookName</h5>
+                        <p class="card-text">@item.Description</p>
+                        <a asp-controller="Book" asp-action="getbookid" asp-route-id="@item.id" class="btn btn-primary">View Book</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@*@section scripts{
+    <script>
+        $(document).ready(
+            function () {
+                alert("Document is ready");
+            }
+        );
+    </script>
+        }*@

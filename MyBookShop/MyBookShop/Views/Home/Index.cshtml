@@ -1,0 +1,17 @@
+﻿
+@{ 
+    var details = ViewData["BookDetails"] as BookModel;
+}
+@{ 
+    ViewData["Title"] = "Home";
+}
+
+<h1>Home Page</h1>
+<hr />
+ID : @ViewBag.Type.id
+<br />
+Bookname : @ViewBag.Type.BookName
+<hr />
+Id: @details.id
+<br />
+Bookname :@details.BookName
