@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using MyBookShop.Models;
 
 namespace MyBookShop.Data
 {
@@ -13,6 +14,7 @@ namespace MyBookShop.Data
 
         }
         public DbSet<Books> Books { get; set; }
+        public DbSet<MyBookShop.Models.BookModel> BookModel { get; set; }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{

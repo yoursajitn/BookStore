@@ -11,9 +11,9 @@ namespace MyBookShop.Controllers
     public class BookController : Controller
     {
         private readonly BookRepository _bookRepository = null;
-        public BookController()
+        public BookController(BookRepository bookRepository)
         {
-            _bookRepository = new BookRepository();
+            _bookRepository = bookRepository;
         }
         public ViewResult GetAllBooks()
         {
@@ -33,13 +33,20 @@ namespace MyBookShop.Controllers
             return _bookRepository.SearchBooks(bookname, author);
         }
 
-        public ViewResult AddNewBook()
+        public ViewResult AddNewBook(bool isSuccess=false,int bookid=0)
         {
+            ViewBag.IsSuccess = isSuccess;
+            ViewBag.BookId = bookid;
             return View();
         }
         [HttpPost]
-        public ViewResult AddNewBook(BookModel _bookModel)
+        public IActionResult AddNewBook(BookModel _bookModel)
         {
+           int id= _bookRepository.AddBook(_bookModel);
+            if (id > 0)
+            {
+                return RedirectToAction(nameof(AddNewBook),new { isSuccess=true,bookid=id});//this will reset the fields, we called AddNewBook() from [HTTPGET]
+            }
             return View();
         }
     }

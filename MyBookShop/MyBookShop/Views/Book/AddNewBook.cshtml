@@ -1,23 +1,65 @@
-﻿
-@model BookModel
+﻿@model MyBookShop.Models.BookModel
 
-<form method="post" asp-controller="book" asp-action="AddNewBook">
-    <div class="container">
-        <div class="form-group">
-            <label asp-for="BookName"></label>
-            <input asp-for="BookName" class="form-control" />
+@{
+    ViewData["Title"] = "AddNewBook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <h1>AddNewBook</h1>
+    @if (ViewBag.IsSuccess)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>New Book Details Added Successfully</strong><br />
+            click <a asp-controller="book" asp-action="getbookid" asp-route-id="@ViewBag.BookId">here </a>to view details.
+            <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-        <div class="form-group">
-            <label asp-for="Author"></label>
-            <input asp-for="Author" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label asp-for="Description"></label>
-            <textarea asp-for="Description" class="form-control" />
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Add Book" class="btn btn-primary" />
+    }
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="AddNewBook">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="BookName" class="control-label"></label>
+                    <input asp-for="BookName" class="form-control" />
+                    <span asp-validation-for="BookName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Author" class="control-label"></label>
+                    <input asp-for="Author" class="form-control" />
+                    <span asp-validation-for="Author" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Category" class="control-label"></label>
+                    <input asp-for="Category" class="form-control" />
+                    <span asp-validation-for="Category" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Language" class="control-label"></label>
+                    <input asp-for="Language" class="form-control" />
+                    <span asp-validation-for="Language" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TotalPages" class="control-label"></label>
+                    <input asp-for="TotalPages" class="form-control" />
+                    <span asp-validation-for="TotalPages" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
         </div>
     </div>
-</form>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
 
