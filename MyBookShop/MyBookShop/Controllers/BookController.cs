@@ -14,17 +14,17 @@ namespace MyBookShop.Controllers
         public BookController(BookRepository bookRepository)
         {
             _bookRepository = bookRepository;
-        }
-        public ViewResult GetAllBooks()
+        }        
+        public async Task<ViewResult> GetAllBooks()
         {
             //return _bookRepository.GetAllBooks();
-            var data = _bookRepository.GetAllBooks();
+            var data =await _bookRepository.GetAllBooks();
             return View(data);
         }
 
-        public ViewResult GetBookId(int id)
+        public async Task<ViewResult> GetBookId(int id)
         {
-            var data= _bookRepository.GetBook(id);
+            var data=await _bookRepository.GetBook(id);
             return View(data);
         }
 
@@ -40,14 +40,15 @@ namespace MyBookShop.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddNewBook(BookModel _bookModel)
+        public async Task< IActionResult> AddNewBook(BookModel _bookModel)
         {
-           int id= _bookRepository.AddBook(_bookModel);
+           int id=await _bookRepository.AddBook(_bookModel);
             if (id > 0)
             {
-                return RedirectToAction(nameof(AddNewBook),new { isSuccess=true,bookid=id});//this will reset the fields, we called AddNewBook() from [HTTPGET]
+                //this will reset the fields, we called AddNewBook() from [HTTPGET].
+                return RedirectToAction(nameof(AddNewBook),new { isSuccess=true,bookid=id});
             }
             return View();
-        }
+        }        
     }
 }
