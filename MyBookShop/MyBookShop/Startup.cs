@@ -28,7 +28,10 @@ namespace MyBookShop
         {
             services.AddDbContext<BookStoreContext>(option=>option.UseSqlServer("Server=.;Database=BookStore;Integrated security=True;"));
             services.AddRazorPages();
+            //uncomment below code for enable client side validation
+                //.AddViewOptions(option=>option.HtmlHelperOptions.ClientValidationEnabled=false);
             services.AddScoped<BookRepository,BookRepository>();
+            services.AddScoped<LanguageRepository, LanguageRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

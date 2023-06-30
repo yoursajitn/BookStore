@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyBookShop.Models
 {
     public class BookModel
     {
-        [DataType(DataType.Password)]
-        [Required(ErrorMessage ="Password is required.")]
-        public string MyFields { get; set; }
+        //[DataType(DataType.Password)]
+        //[Required(ErrorMessage ="Password is required.")]
+        //public string MyFields { get; set; }
         public int id { get; set; }
         [Required]
-        [StringLength(100,MinimumLength =3)]
+        //[StringLength(100,MinimumLength =5)]
         public string BookName { get; set; }
         [Required]
         public string Author { get; set; }
@@ -27,5 +29,9 @@ namespace MyBookShop.Models
         [Required(ErrorMessage ="Please Enter the total pages.")]
         [Display(Name="Total Pages of Book")]
         public int? TotalPages { get; set; }//we set the nullable , coz of taking nueric value.
+        [Display(Name = "Choose Cover Photo")]
+        [NotMapped]
+        public IFormFile CoverPhoto { get; set; }
+        public string CoverImageUrl { get; set; }
     }
 }

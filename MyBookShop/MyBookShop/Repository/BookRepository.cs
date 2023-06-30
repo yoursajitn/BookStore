@@ -25,7 +25,8 @@ namespace MyBookShop.Repository
                 LanguageId = bookModel.LanguageId,
                 //Language = bookModel.Language.Name,
                 CreatedOn = DateTime.UtcNow,
-                UpdatedOn=DateTime.UtcNow
+                UpdatedOn=DateTime.UtcNow,
+                CoverImageUrl=bookModel.CoverImageUrl
             };
            await _bookStoreContext.Books.AddAsync(newBook);
            await _bookStoreContext.SaveChangesAsync();
@@ -33,26 +34,38 @@ namespace MyBookShop.Repository
         }
         public async Task< List<BookModel>> GetAllBooks()
         {
-            var books = new List<BookModel>();
-            var allbooks = await _bookStoreContext.Books.ToListAsync();
-            if (allbooks?.Any() == true)
-            {
-                foreach (var book in allbooks)
-                {
-                    books.Add(new BookModel() { 
-                    BookName=book.BookName,
-                    Author=book.Author,
-                    Description=book.Description,
-                    TotalPages=book.TotalPages,
-                    id=book.id,
-                    Category=book.Category,
-                        LanguageId = book.LanguageId,
-                        Language=book.Language.Name
+           return await _bookStoreContext.Books.Select(book=>new BookModel() {
+                BookName = book.BookName,
+                Author = book.Author,
+                Description = book.Description,
+                TotalPages = book.TotalPages,
+                id = book.id,
+                Category = book.Category,
+                LanguageId = book.LanguageId,
+                Language = book.Language.Name,
+                CoverImageUrl = book.CoverImageUrl
+            }).ToListAsync();
 
-                    });
-                }
-            }
-            return books;
+            //var books = new List<BookModel>();
+            //var allbooks = await _bookStoreContext.Books.ToListAsync();
+            //if (allbooks?.Any() == true)
+            //{
+            //    foreach (var book in allbooks)
+            //    {
+            //        books.Add(new BookModel() { 
+            //        BookName=book.BookName,
+            //        Author=book.Author,
+            //        Description=book.Description,
+            //        TotalPages=book.TotalPages,
+            //        id=book.id,
+            //        Category=book.Category,
+            //            LanguageId = book.LanguageId,
+            //            Language=book.Language.Name,
+            //            CoverImageUrl = book.CoverImageUrl
+            //        });
+            //    }
+            //}
+            //return books;
         }
 
         
@@ -68,8 +81,9 @@ namespace MyBookShop.Repository
                 id = book.id,
                 Category = book.Category,
                 LanguageId = book.LanguageId,
-                Language = book.Language.Name
-            }).FirstOrDefaultAsync();
+                Language = book.Language.Name,
+               CoverImageUrl = book.CoverImageUrl
+           }).FirstOrDefaultAsync();
             ////if (book != null)
             ////{
             //    var bookdetails = new BookModel() {
