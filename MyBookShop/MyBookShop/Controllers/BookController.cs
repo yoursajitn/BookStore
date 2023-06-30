@@ -5,15 +5,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyBookShop.Repository ;
 using MyBookShop.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MyBookShop.Controllers
 {
     public class BookController : Controller
     {
         private readonly BookRepository _bookRepository = null;
-        public BookController(BookRepository bookRepository)
+        private readonly LanguageRepository _languageRepository = null;
+        public BookController(BookRepository bookRepository, LanguageRepository languageRepository)
         {
             _bookRepository = bookRepository;
+            _languageRepository = languageRepository;
         }        
         public async Task<ViewResult> GetAllBooks()
         {
@@ -33,22 +36,57 @@ namespace MyBookShop.Controllers
             return _bookRepository.SearchBooks(bookname, author);
         }
 
-        public ViewResult AddNewBook(bool isSuccess=false,int bookid=0)
+        public async Task<ViewResult> AddNewBook(bool isSuccess=false,int bookid=0)
         {
+            //var model = new BookModel() { Language="Marathi"};
             ViewBag.IsSuccess = isSuccess;
             ViewBag.BookId = bookid;
+            //var group1 = new SelectListGroup() {Name="Group1" };
+            //var group2 = new SelectListGroup() { Name = "Group2" };
+            //var group3 = new SelectListGroup() { Name = "Group3" };
+            //ViewBag.Language =new SelectList(new List<string>() {"Marahi","Hindi","English","Spanish" });
+            //ViewBag.Language = new SelectList(getLanguages(),"Id","Text");
+            //ViewBag.Language = new List<SelectListItem>() {
+            //new SelectListItem(){Value="1",Text="Marathi",Group=group1 },
+            //new SelectListItem(){Value="2",Text="Hindi",Group=group1 },
+            //new SelectListItem(){Value="3",Text="English",Group=group2 },
+            //new SelectListItem(){Value="4",Text="Spanish",Group=group2 },
+            //new SelectListItem(){Value="5",Text="Urdu",Group=group3 },
+            //};
+            ViewBag.Language =new SelectList(await _languageRepository.GetLanguages(),"Id","Name");
             return View();
         }
         [HttpPost]
         public async Task< IActionResult> AddNewBook(BookModel _bookModel)
         {
-           int id=await _bookRepository.AddBook(_bookModel);
-            if (id > 0)
+            if (ModelState.IsValid)
             {
-                //this will reset the fields, we called AddNewBook() from [HTTPGET].
-                return RedirectToAction(nameof(AddNewBook),new { isSuccess=true,bookid=id});
+                int id = await _bookRepository.AddBook(_bookModel);
+                if (id > 0)
+                {
+                    //this will reset the fields, we called AddNewBook() from [HTTPGET].
+                    return RedirectToAction(nameof(AddNewBook), new { isSuccess = true, bookid = id });
+                }
+
             }
+            ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
+            //ViewBag.Language = new List<string>() { "Marahi", "Hindi", "English", "Spanish" };
+            //ViewBag.Language = new SelectList(getLanguages(), "Id", "Text");
+            //Note : in validatio summary we can use 2 values, All and ModleOnly.
+            //All value contains the property as well as model(from controller, custom error) value.
+            //ModelOnly- contains only custom error from controller
+            //ModelState.AddModelError("", "This is an custom error message");
             return View();
-        }        
+
+        }
+
+        //private List<LanguageModel> getLanguages()
+        //{
+        //    return new List<LanguageModel>() {
+        //    new LanguageModel(){Id=1,Text="Marathi" },
+        //    new LanguageModel(){Id=2,Text="Hindi" },
+        //    new LanguageModel(){Id=3,Text="English" },
+        //    };
+        //}
     }
 }

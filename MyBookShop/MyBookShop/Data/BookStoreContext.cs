@@ -14,6 +14,7 @@ namespace MyBookShop.Data
 
         }
         public DbSet<Books> Books { get; set; }
+        public DbSet<Language> Languages { get; set; } 
         public DbSet<MyBookShop.Models.BookModel> BookModel { get; set; }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

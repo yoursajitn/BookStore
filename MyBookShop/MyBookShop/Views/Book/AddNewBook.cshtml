@@ -6,7 +6,7 @@
 }
 <div class="container">
     <h1>AddNewBook</h1>
-    @if (ViewBag.IsSuccess)
+    @if (ViewBag.IsSuccess==true)
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>New Book Details Added Successfully</strong><br />
@@ -21,6 +21,11 @@
         <div class="col-md-4">
             <form asp-action="AddNewBook">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="MyFields" class="control-label"></label>
+                    <input asp-for="MyFields" class="form-control" />
+                    <span asp-validation-for="MyFields" class="text-danger"></span>
+                </div>
                 <div class="form-group">
                     <label asp-for="BookName" class="control-label"></label>
                     <input asp-for="BookName" class="form-control" />
@@ -42,9 +47,11 @@
                     <span asp-validation-for="Category" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Language" class="control-label"></label>
-                    <input asp-for="Language" class="form-control" />
-                    <span asp-validation-for="Language" class="text-danger"></span>
+                    <label asp-for="LanguageId" class="control-label"></label>
+                    <select asp-for="LanguageId" class="form-control" asp-items="ViewBag.Language">
+                        <option value="">Please Choose Language for Book</option>
+                    </select>
+                    <span asp-validation-for="LanguageId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="TotalPages" class="control-label"></label>
