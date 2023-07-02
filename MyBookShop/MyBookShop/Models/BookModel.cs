@@ -21,17 +21,27 @@ namespace MyBookShop.Models
         public string Author { get; set; }
         [Required]
         public string Description { get; set; }
-        
+
         public string Category { get; set; }
-        [Required(ErrorMessage ="Please choose language for book.")]
+        [Required(ErrorMessage = "Please choose language for book.")]
         public int LanguageId { get; set; }
         public string Language { get; set; }
-        [Required(ErrorMessage ="Please Enter the total pages.")]
-        [Display(Name="Total Pages of Book")]
+        [Required(ErrorMessage = "Please Enter the total pages.")]
+        [Display(Name = "Total Pages of Book")]
         public int? TotalPages { get; set; }//we set the nullable , coz of taking nueric value.
         [Display(Name = "Choose Cover Photo")]
         [NotMapped]
         public IFormFile CoverPhoto { get; set; }
+        [Display(Name = "Choose Photos for gallary")]
+        [Required]
+        [NotMapped]
+        public IFormFileCollection GallaryFiles { get; set; }
         public string CoverImageUrl { get; set; }
+        public List<GalleryModel> Gallery { get; set; }
+        [Display(Name = "Choose Pdf file for the Book")]
+        [NotMapped]
+        public IFormFile BookPdf { get; set; }
+        public string BookPdfUrl { get; set; }
+
     }
 }

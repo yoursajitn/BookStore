@@ -26,8 +26,17 @@ namespace MyBookShop.Repository
                 //Language = bookModel.Language.Name,
                 CreatedOn = DateTime.UtcNow,
                 UpdatedOn=DateTime.UtcNow,
-                CoverImageUrl=bookModel.CoverImageUrl
+                CoverImageUrl=bookModel.CoverImageUrl,
+                BookPdfUrl=bookModel.BookPdfUrl
             };
+            newBook.bookgallery = new List<BookGallery>();
+            foreach (var file in bookModel.Gallery)
+            {
+                newBook.bookgallery.Add(new BookGallery() { 
+                Name=file.Name,
+                Url=file.Url
+                });
+            }
            await _bookStoreContext.Books.AddAsync(newBook);
            await _bookStoreContext.SaveChangesAsync();
             return newBook.id;
@@ -71,8 +80,8 @@ namespace MyBookShop.Repository
         
         public async Task<BookModel> GetBook(int id)
         {
-           //var book= await _bookStoreContext.Books.FindAsync(id);
-           return await _bookStoreContext.Books.Where(x=>x.id==id).Select(book => new BookModel()
+            //var book= await _bookStoreContext.Books.FindAsync(id);
+            return await _bookStoreContext.Books.Where(x => x.id == id).Select(book => new BookModel()
             {
                 BookName = book.BookName,
                 Author = book.Author,
@@ -82,8 +91,14 @@ namespace MyBookShop.Repository
                 Category = book.Category,
                 LanguageId = book.LanguageId,
                 Language = book.Language.Name,
-               CoverImageUrl = book.CoverImageUrl
-           }).FirstOrDefaultAsync();
+                CoverImageUrl = book.CoverImageUrl,
+                Gallery = book.bookgallery.Select(g => new GalleryModel() {
+                Id=g.Id,
+                Name=g.Name,
+                 Url=g.Url
+                }).ToList(),
+                BookPdfUrl=book.BookPdfUrl
+            }).FirstOrDefaultAsync();
             ////if (book != null)
             ////{
             //    var bookdetails = new BookModel() {

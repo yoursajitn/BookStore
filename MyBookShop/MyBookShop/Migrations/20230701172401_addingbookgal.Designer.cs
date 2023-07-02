@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBookShop.Data;
 
 namespace MyBookShop.Migrations
 {
     [DbContext(typeof(BookStoreContext))]
-    partial class BookStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20230701172401_addingbookgal")]
+    partial class addingbookgal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,18 +31,18 @@ namespace MyBookShop.Migrations
                     b.Property<int>("BookId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("Booksid")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("booksid")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("booksid");
+                    b.HasIndex("Booksid");
 
                     b.ToTable("BookGallery");
                 });
@@ -56,9 +58,6 @@ namespace MyBookShop.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BookName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BookPdfUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Category")
@@ -109,9 +108,9 @@ namespace MyBookShop.Migrations
 
             modelBuilder.Entity("MyBookShop.Data.BookGallery", b =>
                 {
-                    b.HasOne("MyBookShop.Data.Books", "books")
+                    b.HasOne("MyBookShop.Data.Books", null)
                         .WithMany("bookgallery")
-                        .HasForeignKey("booksid");
+                        .HasForeignKey("Booksid");
                 });
 
             modelBuilder.Entity("MyBookShop.Data.Books", b =>

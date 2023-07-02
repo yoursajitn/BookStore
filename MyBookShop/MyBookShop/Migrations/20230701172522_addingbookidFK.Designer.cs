@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBookShop.Data;
 
 namespace MyBookShop.Migrations
 {
     [DbContext(typeof(BookStoreContext))]
-    partial class BookStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20230701172522_addingbookidFK")]
+    partial class addingbookidFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,9 +58,6 @@ namespace MyBookShop.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BookName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BookPdfUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Category")
