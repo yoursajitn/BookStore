@@ -6,7 +6,7 @@
     ViewData["Title"] = "Home";
 }
 
-<h1>Home Page</h1>
+@*<h1>Home Page</h1>
 <hr />
 ID : @ViewBag.Type.id
 <br />
@@ -14,4 +14,13 @@ Bookname : @ViewBag.Type.BookName
 <hr />
 Id: @details.id
 <br />
-Bookname :@details.BookName
+Bookname :@details.BookName*@
+<div class="py-5 bg-light">
+    <div class="container">
+        <h3 class="h3">Top books</h3>
+        @await Component.InvokeAsync("TopBooks", new { count = 3 })
+        
+        @*<vc:top-books count="6" ></vc:top-books>*@
+
+    </div>
+</div>

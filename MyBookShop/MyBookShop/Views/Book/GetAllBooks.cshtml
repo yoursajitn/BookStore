@@ -7,7 +7,7 @@
 <link href="~/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
 
 <h1>All Books</h1>
-@foreach (var item in Model)
+@*@foreach (var item in Model)
 {
     <div class="container">
         <div class="row">
@@ -25,7 +25,20 @@
             </div>
         </div>
     </div>
-}
+}*@
+<div class="container">
+    <h3 class="display-4">All books</h3>
+    <div class="row">
+
+        @foreach (var book in Model)
+        {
+            <div class="col-md-4">
+                <partial name="_bookThumbnail" model="@book" />
+            </div>
+        }
+
+    </div>
+</div>
 @*@section scripts{
     <script>
         $(document).ready(
